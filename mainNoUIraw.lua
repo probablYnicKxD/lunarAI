@@ -35,7 +35,7 @@ if playerID == 1038671897 then
 elseif table.find(earlyAccess, playerID) then
     aiVersion = aiVersion .. "Early Access"
 elseif playerID == preAlphaTester then
-    aiVersion == aiVersion .. "Pre-Alpha Tester Edition"
+    aiVersion = aiVersion .. "Pre-Alpha Tester Edition"
 else
     aiVersion = aiVersion .. "Public Beta"
 end
