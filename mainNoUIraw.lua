@@ -141,11 +141,11 @@ end
 
 --[[
 
-	Lunar AI 0.3.8 Beta // Made by probablYnicK
+	Lunar AI 0.3.8 (PATCH A) Beta // Made by probablYnicK
 
 ]]--
 
-local aiVersion = "0.3.8 "
+local aiVersion = "0.3.8 (PATCH A) "
 
 local function getPlayerID()
     return game.Players.LocalPlayer.UserId
@@ -1494,6 +1494,16 @@ local importantAssets = {
 }
 
 LatestRoom.Changed:Connect(function()
+	local room = game.Workspace.CurrentRooms:FindFirstChild(tostring(LatestRoom.Value))
+
+	for i, obj in pairs(room:WaitForChild("Assets"):GetChildren()) do
+		if obj.Name == "Bed" or obj.Name == "Wardrobe" then
+			ApplyHidingChams(obj)
+		end
+	end
+end)
+
+LatestRoom.Changed:Connect(function()
 	if OrionLib.Flags["RemoveAssets"].Value == false then return end
 
 	local room = game.Workspace.CurrentRooms:FindFirstChild(tostring(LatestRoom.Value))
@@ -1509,11 +1519,18 @@ LatestRoom.Changed:Connect(function()
 					warn("Lunar AI // Asset " .. obj.Name .. " is important!")
 				else
 					for i, important in pairs(importantAssets) do
-						if FindFirstDescendant(important, obj) then
-							warn("Lunar AI // Asset " .. obj.Name .. " is important!")
-						else
-							obj:Destroy()
+						local removable = true
+					
+						for i, desc in pairs(obj:GetDescendants()) do
+							if table.find(importantAssets, desc.Name) then
+								warn("Lunar AI // Asset " .. obj.Name .. " is important! [CONTAINS IMPORTANT ITEM]")
+								removable = false
+							else
+								
+							end
 						end
+						
+						if removable == true then obj:Destroy() end
 					end
 				end
 			end
