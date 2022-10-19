@@ -145,7 +145,7 @@ end
 
 ]]--
 
-local aiVersion = "0.3.8 (PATCH A) "
+local aiVersion = "0.3.8 (PATCH A) [LUNARBOT TEST] "
 
 local function getPlayerID()
     return game.Players.LocalPlayer.UserId
