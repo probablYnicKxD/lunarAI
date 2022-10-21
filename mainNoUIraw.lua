@@ -1073,6 +1073,34 @@ workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
 	end,
 })
 
+local function findDrawer()
+	for i, obj in pairs(game:GetDescendants()) do
+		if obj.Name == "DrawerContainer" then
+			return obj
+		end
+	end
+end
+
+summonSection:AddButton({
+	Name = "Summon Timothy",
+	Callback = function()
+		local drawer = findDrawer()
+			
+		if drawer then
+			require(initiator.RemoteListener.Modules.SpiderJumpscare)(require(initiator), drawer, 0.2)
+		else
+			notifyUser("Summon", "Failed to summon Timothy! Could not find a drawer to summon Timothy in.")
+		end
+	end,
+})
+
+summonSection:AddButton({
+	Name = "Summon Seek Eye",
+	Callback = function()
+		require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+	end,
+})
+
 --[[
 
 local function autoScreech(v)
