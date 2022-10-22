@@ -141,11 +141,11 @@ end
 
 --[[
 
-	Lunar AI 0.3.9 Beta // Made by probablYnicK
+	Lunar AI 0.3.9 Sub-Update Beta // Made by probablYnicK
 
 ]]--
 
-local aiVersion = "0.3.9 "
+local aiVersion = "0.3.9 Sub-Update "
 
 local function getPlayerID()
     return game.Players.LocalPlayer.UserId
