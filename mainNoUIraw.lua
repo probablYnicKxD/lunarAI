@@ -141,11 +141,11 @@ end
 
 --[[
 
-	Lunar AI 0.3.9 Sub-Update Beta // Made by probablYnicK
+	Lunar AI 0.3.9 Sub-Update Beta (PATCH A) // Made by probablYnicK
 
 ]]--
 
-local aiVersion = "0.3.9 Sub-Update "
+local aiVersion = "0.3.9 Sub-Update (PATCH A)"
 
 local function getPlayerID()
     return game.Players.LocalPlayer.UserId
@@ -1073,7 +1073,7 @@ workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
 		else
 			notifyUser("Summon", "Failed to summon Timothy! Could not find a drawer to summon Timothy in.")
 		end
-	elseif entity = "SeekEye" then
+	elseif entity == "SeekEye" then
 		require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
 	end
 end
