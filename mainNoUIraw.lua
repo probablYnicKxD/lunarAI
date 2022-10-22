@@ -1047,32 +1047,6 @@ local summonSection = summonTab:AddSection({
 	Name = "Summon"
 })
 
-summonSection:AddParagraph("Notice!", "These entities are spawned only on the client, meaning other players will not have the ability to see or hear these entities. These entities will also not damage you or other players.")
-
-summonSection:AddButton({
-	Name = "Summon Screech",
-	Callback = function()
-		require(game.StarterGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech)(require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game),
-workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
-	end,
-})
-
-summonSection:AddButton({
-	Name = "Summon Halt",
-	Callback = function()
-		require(game.ReplicatedStorage.ClientModules.EntityModules.Shade).stuff(require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game),
-workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
-	end,
-})
-
-summonSection:AddButton({
-	Name = "Summon Glitch",
-	Callback = function()
-		require(game.ReplicatedStorage.ClientModules.EntityModules.Glitch).stuff(require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game),
-workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
-	end,
-})
-
 local function findDrawer()
 	for i, obj in pairs(game:GetDescendants()) do
 		if obj.Name == "DrawerContainer" then
@@ -1081,9 +1055,17 @@ local function findDrawer()
 	end
 end
 
-summonSection:AddButton({
-	Name = "Summon Timothy",
-	Callback = function()
+local function summon(entity)
+	if entity == "Screech" then
+		require(game.StarterGui.MainUI.Initiator.Main_Game.RemoteListener.Modules.Screech)(require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game),
+workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
+	elseif entity == "Halt" then
+		require(game.ReplicatedStorage.ClientModules.EntityModules.Shade).stuff(require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game),
+workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
+	elseif entity == "Glitch" then
+		require(game.ReplicatedStorage.ClientModules.EntityModules.Glitch).stuff(require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game),
+workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
+	elseif entity == "Timothy" then
 		local drawer = findDrawer()
 			
 		if drawer then
@@ -1091,14 +1073,106 @@ summonSection:AddButton({
 		else
 			notifyUser("Summon", "Failed to summon Timothy! Could not find a drawer to summon Timothy in.")
 		end
+	elseif entity = "SeekEye" then
+		require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+	end
+end
+
+
+summonSection:AddParagraph("Notice!", "These entities are spawned only on the client, meaning other players will not have the ability to see or hear these entities. These entities will also not damage you or other players.")
+
+summonSection:AddButton({
+	Name = "Summon Screech",
+	Callback = function()
+		summon("Screech")
+	end,
+})
+
+summonSection:AddButton({
+	Name = "Summon Halt",
+	Callback = function()
+		summon("Halt")
+	end,
+})
+
+summonSection:AddButton({
+	Name = "Summon Glitch",
+	Callback = function()
+		summon("Glitch")
+	end,
+})
+
+summonSection:AddButton({
+	Name = "Summon Timothy",
+	Callback = function()
+		summon("Timothy")
 	end,
 })
 
 summonSection:AddButton({
 	Name = "Summon Seek Eye",
 	Callback = function()
-		require(game.ReplicatedStorage.ClientModules.EntityModules.Seek).tease(nil, workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")], 100)
+		summon("SeekEye")
 	end,
+})
+
+local keybindsSection = summonTab:AddSection({
+	Name = "Summon Keybinds"
+})
+
+keybindsSection:AddBind({
+	Name = "Summon Screech",
+	Default = Enum.KeyCode.KeypadOne,
+	Hold = false,
+    	Flag = "SummonScreech",
+   	Save = true,
+	Callback = function()
+        	summon("Screech")
+	end,    
+})
+
+keybindsSection:AddBind({
+	Name = "Summon Halt",
+	Default = Enum.KeyCode.KeypadTwo,
+	Hold = false,
+    	Flag = "SummonHalt",
+    	Save = true,
+	Callback = function()
+        	summon("Halt")
+	end,    
+})
+
+keybindsSection:AddBind({
+	Name = "Summon Glitch",
+	Default = Enum.KeyCode.KeypadThree,
+	Hold = false,
+    	Flag = "SummonGlitch",
+    	Save = true,
+	Callback = function()
+        	summon("Glitch")
+	end,    
+})
+
+keybindsSection:AddBind({
+	Name = "Summon Timothy",
+	Default = Enum.KeyCode.KeypadFour,
+	Hold = false,
+    	Flag = "SummonTimothy",
+    	Save = true,
+	Callback = function()
+        	summon("Timothy")
+	end,    
+})
+
+keybindsSection:AddBind({
+	Name = "Summon Seek Eye",
+	Default = Enum.KeyCode.KeypadFive,
+	Hold = false,
+    	Flag = "SummonSeekEye",
+    	Save = true,
+	Callback = function()
+        	summon("SeekEye")
+	end,    
 })
 
 --[[
