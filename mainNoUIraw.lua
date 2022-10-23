@@ -141,11 +141,11 @@ end
 
 --[[
 
-	Lunar AI 0.3.9-2 // Made by probablYnicK
+	Lunar AI 0.3.9-2 (PATCH A) // Made by probablYnicK
 
 ]]--
 
-local aiVersion = "0.3.9-2 "
+local aiVersion = "0.3.9-2 (PATCH A) "
 
 local function getPlayerID()
     return game.Players.LocalPlayer.UserId
@@ -1089,202 +1089,27 @@ workspace.CurrentRooms[game.Players.LocalPlayer:GetAttribute("CurrentRoom")])
 		setRooms()
 		require(game.ReplicatedStorage.ClientModules.Module_Events).tryp(currentLoadedRoom, 9e307)
 	elseif entity == "Rush" then
-		local speed = 75
-		local rush = Instance.new("Model", game:GetService("Teams"))
-		rush.Name = "RushMoving"
-		game:GetService("ReplicatedStorage").JumpscareModels.RushNew:Clone().Parent = rush
-		rush.RushNew.CanCollide = false
-		local tweensv = game:GetService("TweenService")
-		local currentLoadedRoom
-		local firstLoadedRoom
+		loadstring(game:HttpGet"https://raw.githubusercontent.com/sponguss/storage/main/entitySpawner.lua")().createEntity("Rush")
 
-		local function setRooms()
-			local tb = {}
-			table.foreach(workspace.CurrentRooms:GetChildren(), function(_, r)
-				if r:FindFirstChild("RoomStart") and r.Name~="0" then
-					table.insert(tb, tonumber(r.Name))
-				end
-			end)
-			firstLoadedRoom = workspace.CurrentRooms[tostring(math.min(unpack(tb)))]
-			currentLoadedRoom = workspace.CurrentRooms[tostring(math.max(unpack(tb)) - 1)]
-			workspace.CurrentRooms.ChildAdded:Connect(function()
-				local tb = {}
-				table.foreach(workspace.CurrentRooms:GetChildren(), function(_, r)
-					if r:FindFirstChild("RoomStart") and r.Name~="0" then
-						table.insert(tb, tonumber(r.Name))
-					end
-				end)
-				currentLoadedRoom = workspace.CurrentRooms[tostring(math.max(unpack(tb)) - 1)]
-			end)
-		end
-		setRooms()
+		local tb=entityTable["Ambush"]
+		tb.Speed=120
+		tb.Sounds={"PlaySound", "Footsteps"}
+		tb.Model="https://github.com/sponguss/storage/raw/main/newambush.rbxm"
+		tb.Ambush.Enabled=true
+		tb.WaitTime=2.5
 
-		rush.Parent = workspace
-		rush:MoveTo(firstLoadedRoom.RoomStart.Position + Vector3.new(0, 5.2, 0))
-		require(game.ReplicatedStorage.ClientModules.Module_Events).flickerLights(tonumber(currentLoadedRoom.Name), 1)
-		require(game.ReplicatedStorage.ClientModules.Module_Events).breakLights(firstLoadedRoom)
-
-		rush.RushNew.Attachment.BlackTrail.Enabled = true
-		rush.RushNew.PlaySound:Play()
-		rush.RushNew.Footsteps:Play()
-		wait(5)
-		for _, room in pairs(workspace.CurrentRooms:GetChildren()) do
-			if not room:FindFirstChild("Nodes") then
-				continue
-			end
-			local nodeNum = #room.Nodes:GetChildren()
-			for _, node in pairs(room.Nodes:GetChildren()) do
-				local timeC = (math.abs((node.Position - rush.RushNew.Position).Magnitude)) / speed
-				tweensv
-					:Create(rush.RushNew, TweenInfo.new(timeC, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {
-						CFrame = CFrame.new(node.CFrame.X, node.CFrame.Y + 5.2, node.CFrame.Z),
-					})
-					:Play()
-				local random = math.random(1, nodeNum)
-				if tonumber(node.Name) == random then -- first or last node? just choose please
-					require(game.ReplicatedStorage.ClientModules.Module_Events).breakLights(room)
-				end
-				task.wait(timeC)
-			end
-			if room == currentLoadedRoom then
-				task.wait(1)
-				tweensv
-					:Create(rush.RushNew, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {
-						CFrame = CFrame.new(rush.RushNew.CFrame.X, -50, rush.RushNew.CFrame.Z),
-					})
-					:Play()
-				wait(0.5)
-				rush:Destroy()
-				currentLoadedRoom:WaitForChild("Door").ClientOpen:FireServer()
-			end
-		end
+		loadstring(game:HttpGet"https://raw.githubusercontent.com/sponguss/storage/main/entitySpawner.lua")().runEntity("Rush")
 	elseif entity == "Ambush" then
-		local speed = 120
-		local waitTime=2.5
-		local rush = Instance.new("Model", game:GetService("Teams"))
-		rush.Name = "RushMoving"
-		if not isfile("ambush.rbxm") then
-		    writefile("ambush.rbxm", game:HttpGet"https://github.com/sponguss/storage/raw/main/ambush.rbxm")
-		end
-		game:GetObjects((getcustomasset or getsynasset)("ambush.rbxm"))[1].Parent = rush
-		rush.RushNew.CanCollide = false
-		rush.RushNew.PlaySound.Playing=false
-		rush.RushNew.Footsteps.Playing=false
-		local tweensv = game:GetService("TweenService")
-		local currentLoadedRoom
-		local firstLoadedRoom
-		local times=math.random(1,6)
+		loadstring(game:HttpGet"https://raw.githubusercontent.com/sponguss/storage/main/entitySpawner.lua")().createEntity("Ambush")
 
-		local function setRooms()
-			local tb = {}
-			table.foreach(workspace.CurrentRooms:GetChildren(), function(_, r)
-				if r:FindFirstChild("RoomStart") and r.Name~="0" then
-					table.insert(tb, tonumber(r.Name))
-				end
-			end)
-			firstLoadedRoom = workspace.CurrentRooms[tostring(math.min(unpack(tb)))]
-			currentLoadedRoom = workspace.CurrentRooms[tostring(math.max(unpack(tb)) - 1)]
-			workspace.CurrentRooms.ChildAdded:Connect(function()
-				local tb = {}
-				table.foreach(workspace.CurrentRooms:GetChildren(), function(_, r)
-					if r:FindFirstChild("RoomStart") and r.Name~="0" then
-						table.insert(tb, tonumber(r.Name))
-					end
-				end)
-				currentLoadedRoom = workspace.CurrentRooms[tostring(math.max(unpack(tb)) - 1)]
-			end)
-		end
-		setRooms()
+		local tb=entityTable["Ambush"]
+		tb.Speed=120
+		tb.Sounds={"PlaySound", "Footsteps"}
+		tb.Model="https://github.com/sponguss/storage/raw/main/newambush.rbxm"
+		tb.Ambush.Enabled=true
+		tb.WaitTime=2.5
 
-		rush.Parent = workspace
-		rush:MoveTo(firstLoadedRoom.RoomStart.Position + Vector3.new(0, 5, 0))
-		require(game.ReplicatedStorage.ClientModules.Module_Events).flickerLights(tonumber(currentLoadedRoom.Name), 1)
-		require(game.ReplicatedStorage.ClientModules.Module_Events).breakLights(firstLoadedRoom)
-
-		workspace.Ambience_Ambush:Play()
-		delay(3, function()
-			rush.RushNew.PlaySound:Play()
-			rush.RushNew.Footsteps:Play()
-		end)
-		local cyclesDone=0
-		local reverting=false
-		while true do
-		    for _, room in pairs(workspace.CurrentRooms:GetChildren()) do
-			if not room:FindFirstChild("Nodes") or tonumber(room.Name)>tonumber(currentLoadedRoom.Name) then
-			    continue
-			end
-			local nodes=room.Nodes:GetChildren()
-			if reverting then
-					repeat
-						for i=#nodes,1,-1 do
-				    local node=nodes[i]
-				    local timeC = (math.abs((node.Position - rush.RushNew.Position).Magnitude)) / speed
-				    tweensv
-					:Create(rush.RushNew, TweenInfo.new(timeC, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {
-					    CFrame = CFrame.new(node.CFrame.X, node.CFrame.Y + 5.2, node.CFrame.Z),
-					})
-					:Play()
-				    local random = math.random(1, #nodes)
-				    if tonumber(node.Name) == random then -- first or last node? just choose please
-					require(game.ReplicatedStorage.ClientModules.Module_Events).breakLights(room)
-				    end
-				    task.wait(timeC)
-				end
-			     until room==firstLoadedRoom
-			     reverting=false
-			     continue
-				end
-			for _, node in pairs(nodes) do
-				if room==firstLoadedRoom and node.Name=="1" then
-						task.wait(waitTime)
-						waitTime=waitTime+.5
-					end
-			    local timeC = (math.abs((node.Position - rush.RushNew.Position).Magnitude)) / speed
-			    tweensv
-				:Create(rush.RushNew, TweenInfo.new(timeC, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {
-				    CFrame = CFrame.new(node.CFrame.X, node.CFrame.Y + 5, node.CFrame.Z),
-				})
-				:Play()
-			    local random = math.random(1, #nodes)
-			    if tonumber(node.Name) == random then -- first or last node? just choose please
-				require(game.ReplicatedStorage.ClientModules.Module_Events).breakLights(room)
-			    end
-			    task.wait(timeC)
-			end
-			if room == currentLoadedRoom then
-			    if cyclesDone==times then
-				task.wait(1)
-				tweensv
-				    :Create(rush.RushNew, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {
-					CFrame = CFrame.new(rush.RushNew.CFrame.X, -50, rush.RushNew.CFrame.Z),
-				    })
-				    :Play()
-				wait(0.5)
-				rush:Destroy()
-				currentLoadedRoom:WaitForChild("Door").ClientOpen:FireServer()
-				break
-			    else
-				for i=#nodes,1,-1 do
-					reverting=true
-				    local node=nodes[i]
-				    local timeC = (math.abs((node.Position - rush.RushNew.Position).Magnitude)) / speed
-				    tweensv
-					:Create(rush.RushNew, TweenInfo.new(timeC, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut), {
-					    CFrame = CFrame.new(node.CFrame.X, node.CFrame.Y + 5.2, node.CFrame.Z),
-					})
-					:Play()
-				    local random = math.random(1, #nodes)
-				    if tonumber(node.Name) == random then -- first or last node? just choose please
-					require(game.ReplicatedStorage.ClientModules.Module_Events).breakLights(room)
-				    end
-				    task.wait(timeC)
-				end
-				cyclesDone=cyclesDone+1
-				speed=speed+20
-			    end
-			end
-		    end
-		end
+		loadstring(game:HttpGet"https://raw.githubusercontent.com/sponguss/storage/main/entitySpawner.lua")().runEntity("Ambush")
 	end
 end
 
