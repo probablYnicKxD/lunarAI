@@ -1,5 +1,16 @@
 --[[ please do not edit this or copy this, thanks! ]]--
 
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+if game.PlaceId == 6516141723 then
+    OrionLib:MakeNotification({
+        Name = "WARNING!",
+        Content = "Do NOT execute Lunar AI in the lobby as it could get you permanently banned!",
+        Time = 30
+    })
+    return
+end
+
 local SECRETEDITION = false
 
 local LatestRoom = game:GetService("ReplicatedStorage").GameData.LatestRoom
@@ -9,8 +20,6 @@ local currentEntity = "None"
 
 local libraryFigureSpawned = false
 local escapeFigureSpawned = false
-
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 local correctKey = loadstring(game:HttpGet("https://raw.githubusercontent.com/coolusername17563245/coolrepo2/main/coolscript"))()
 
@@ -141,11 +150,11 @@ end
 
 --[[
 
-	Lunar AI 0.3.9-2 (PATCH A) // Made by probablYnicK
+	Lunar AI 0.3.9-2 (PATCH B) // Made by probablYnicK
 
 ]]--
 
-local aiVersion = "0.3.9-2 (PATCH A) "
+local aiVersion = "0.3.9-2 (PATCH B) "
 
 local function getPlayerID()
     return game.Players.LocalPlayer.UserId
